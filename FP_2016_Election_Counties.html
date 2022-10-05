@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.251">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>fp_2016_election_counties</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="FP_2016_Election_Counties_files/libs/clipboard/clipboard.min.js"></script>
+<script src="FP_2016_Election_Counties_files/libs/quarto-html/quarto.js"></script>
+<script src="FP_2016_Election_Counties_files/libs/quarto-html/popper.min.js"></script>
+<script src="FP_2016_Election_Counties_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="FP_2016_Election_Counties_files/libs/quarto-html/anchor.min.js"></script>
+<link href="FP_2016_Election_Counties_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="FP_2016_Election_Counties_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="FP_2016_Election_Counties_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="FP_2016_Election_Counties_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="FP_2016_Election_Counties_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="predictors-of-county-voting-in-the-2016-presidential-election" class="level1">
+<h1>Predictors of County Voting in the 2016 Presidential Election</h1>
+<section id="university-of-pennsylvania-stat_177-final-project" class="level2">
+<h2 class="anchored" data-anchor-id="university-of-pennsylvania-stat_177-final-project">University of Pennsylvania STAT_177 Final Project</h2>
+<section id="created-by-michael-kim" class="level3">
+<h3 class="anchored" data-anchor-id="created-by-michael-kim">Created by Michael Kim</h3>
+</section>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<ul>
+<li>The 2016 Presidential Election featured Donald Trump, running on the Republican ticket, and Hillary Clinton, running on the Democratic ticket, both vying for the presidency.</li>
+<li>Despite losing the popular vote by over 2 million people, Donald Trump defeated Hillary Clinton with 304 electoral votes, compared to her 227 votes.</li>
+<li>By examining the county-level voting results, a better picture and summary of the election can be achieved, along with beginning to establish any relationships between party success in the election and various measurable variables on county inhabitants.</li>
+<li>The data being read and used concerns health, economic, and demographic characteristics of counties in the United States. Multiple libraries have been imported for summary and analysis of this data.</li>
+</ul>
+<div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;skip&quot;}" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reading in all of the data and libraries needed for analysis.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> tree</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.formula.api <span class="im">as</span> smf</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>county_data <span class="op">=</span> pd.read_csv(<span class="st">"project_177.csv"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                          index_col<span class="op">=</span><span class="st">'Row.Label'</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>county_data[<span class="st">"Results"</span>]<span class="op">=</span>county_data[<span class="st">"Election.Results.2016"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="defining-the-y-variable" class="level2">
+<h2 class="anchored" data-anchor-id="defining-the-y-variable">Defining the Y-Variable</h2>
+<ul>
+<li>The y-variable, or outcome variable, being used in this analysis is whether a county had majority of Democrat or Republican votes in the 2016 presidential election.</li>
+<li>This is treated as a two-level categorical variable.</li>
+<li>By summarizing both x-variables, or predictor variables, and outcome variables at two different units of analysis, this can give a better understanding of relationships.</li>
+<li>To do so, comparisons between predictor variables and the outcome variable can be drawn first at the State level, and then at the more specific county level.</li>
+</ul>
+</section>
+<section id="key-questions" class="level2">
+<h2 class="anchored" data-anchor-id="key-questions">Key Questions</h2>
+<ul>
+<li>For the analysis, the following few key questions will help guide the summarization and interpretation of data:
+<ul>
+<li>Do predictor variables have similar relationships with which party won on both the county and state level?</li>
+<li>Do predictor variables with statistically significant relationships with the outcome variable appear to have some relationships with each other as well?</li>
+<li>What are the strongest predictors of determining which party won majority of votes within a county during the 2016 presidential election?</li>
+</ul></li>
+</ul>
+</section>
+<section id="state-level-summarization" class="level2">
+<h2 class="anchored" data-anchor-id="state-level-summarization">State Level Summarization</h2>
+<ul>
+<li>Voter profiles for Trump voters and Clinton voters were examined closely following the 2016 election, with some citing distinct differences in demographic or environmental characteristics.</li>
+<li>Some of these include severe housing problems, community types (rural, suburban, or urban), and many more.</li>
+<li>By summarizing these at both state and local levels, this can offer a more complete picture of which predictor variables have a statistically significant relationship with the outcome variable.</li>
+<li>The first summarization and analysis will be done on the Average Percentage of Severe Housing Problems per County.</li>
+</ul>
+<div class="cell" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="58">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#New DataFrame for Severe Housing Problems and 2016 Election Results at State level</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> state_data_housing():</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    state_data_housing1<span class="op">=</span>county_data.groupby(<span class="st">"State.Abbreviation"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    state_data_housing2<span class="op">=</span>state_data_housing1[<span class="st">"Severe.Housing.Problems"</span>].mean().to_frame(name<span class="op">=</span><span class="st">"Severe_Housing_Problem_Percent"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    state_data_housing2[<span class="st">"Election_Result_2016"</span>]<span class="op">=</span>[<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Finding 5 highest and 5 lowest Average Severe Housing Problems Percent of Counties by State</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(state_data_housing2.nlargest(<span class="dv">5</span>,[<span class="st">"Severe_Housing_Problem_Percent"</span>],keep<span class="op">=</span><span class="st">"all"</span>))</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(state_data_housing2.nsmallest(<span class="dv">5</span>,[<span class="st">"Severe_Housing_Problem_Percent"</span>],keep<span class="op">=</span><span class="st">"all"</span>))</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Boxplot and swarmplot of Severe Housing Problems vs. 2016 Election Results</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    state_housing_boxplot<span class="op">=</span>sns.catplot(x<span class="op">=</span><span class="st">"Severe_Housing_Problem_Percent"</span>,y<span class="op">=</span><span class="st">"Election_Result_2016"</span>,data<span class="op">=</span>state_data_housing2,kind<span class="op">=</span><span class="st">"box"</span>,height<span class="op">=</span><span class="dv">4</span>,aspect<span class="op">=</span><span class="dv">2</span>,palette<span class="op">=</span><span class="st">'Set1'</span>)<span class="op">;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    state_housing_boxplot.fig.suptitle(<span class="st">"Percentage of Severe Housing Problems for 2016 Election Results by State"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    state_housing_swarmplot<span class="op">=</span>sns.swarmplot(x<span class="op">=</span><span class="st">"Severe_Housing_Problem_Percent"</span>,y<span class="op">=</span><span class="st">"Election_Result_2016"</span>,data<span class="op">=</span>state_data_housing2,size<span class="op">=</span><span class="dv">3</span>,color<span class="op">=</span><span class="st">".3"</span>,linewidth<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="59">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(state_data_housing())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    Severe_Housing_Problem_Percent Election_Result_2016
+State.Abbreviation                                                     
+HI                                        0.272175             Democrat
+CA                                        0.234302             Democrat
+DC                                        0.212300             Democrat
+NJ                                        0.211229             Democrat
+AZ                                        0.197540           Republican
+                    Severe_Housing_Problem_Percent Election_Result_2016
+State.Abbreviation                                                     
+NE                                        0.103306           Republican
+IA                                        0.104841           Republican
+WV                                        0.106265           Republican
+SD                                        0.107160           Republican
+ND                                        0.110800           Republican
+None</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="FP_2016_Election_Counties_files/figure-html/cell-4-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="60">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating a simple regression model with Severe Housing Problems vs. 2016 Election Results</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> state_data_housing_reg():</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    state_data_housing1<span class="op">=</span>county_data.groupby(<span class="st">"State.Abbreviation"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    state_data_housing2<span class="op">=</span>state_data_housing1[<span class="st">"Severe.Housing.Problems"</span>].mean().to_frame(name<span class="op">=</span><span class="st">"Severe_Housing_Problem_Percent"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    state_data_housing2[<span class="st">"Election_Result_2016"</span>]<span class="op">=</span>[<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>]</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    pd.get_dummies(data<span class="op">=</span>state_data_housing2[<span class="st">"Election_Result_2016"</span>])</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    olsmod1<span class="op">=</span>smf.ols(formula<span class="op">=</span><span class="st">"Severe_Housing_Problem_Percent ~ Election_Result_2016"</span>, data<span class="op">=</span>state_data_housing2)   </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    olsres1<span class="op">=</span>olsmod1.fit()  </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(olsres1.summary())  </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="61">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(state_data_housing_reg())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                  OLS Regression Results                                  
+==========================================================================================
+Dep. Variable:     Severe_Housing_Problem_Percent   R-squared:                       0.285
+Model:                                        OLS   Adj. R-squared:                  0.270
+Method:                             Least Squares   F-statistic:                     19.52
+Date:                            Wed, 05 Oct 2022   Prob (F-statistic):           5.50e-05
+Time:                                    15:38:11   Log-Likelihood:                 109.84
+No. Observations:                              51   AIC:                            -215.7
+Df Residuals:                                  49   BIC:                            -211.8
+Df Model:                                       1                                         
+Covariance Type:                        nonrobust                                         
+======================================================================================================
+                                         coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------------------------------
+Intercept                              0.1741      0.006     27.847      0.000       0.162       0.187
+Election_Result_2016[T.Republican]    -0.0360      0.008     -4.418      0.000      -0.052      -0.020
+==============================================================================
+Omnibus:                       12.502   Durbin-Watson:                   1.801
+Prob(Omnibus):                  0.002   Jarque-Bera (JB):               13.973
+Skew:                           0.954   Prob(JB):                     0.000924
+Kurtosis:                       4.713   Cond. No.                         2.88
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+None</code></pre>
+</div>
+</div>
+</section>
+<section id="analysis-of-severe-housing-problem-percentage-per-county-on-state-level" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-of-severe-housing-problem-percentage-per-county-on-state-level">Analysis of Severe Housing Problem Percentage per County on State Level</h2>
+<ul>
+<li>The 5 states/territories with the highest average percentage of severe housing problems per county include Hawaii, California, Washington D.C., New Jersey, and Arizona.</li>
+<li>The 5 states with the lowest average percentage of severe housing problems per county include Nebraska, Iowa, West Virginia, South Dakota, and North Dakota.</li>
+<li>From looking at this subsection of states and their voting pattern in the 2016 election, it would appear that states that voted Republican had a lower average percentage of severe housing problems per county.</li>
+<li>When examining the boxplot and simple regression of the variables, it appears that this notion holds true, with the relationship being statistically significant and having a p-value &lt; 0.05.</li>
+<li>The next summarization and analysis will be done on a demographic variable, looking at the Average Percentage of Rural Area per County.</li>
+</ul>
+<div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="62">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#New DataFrame for Average Rural Area of Counties and 2016 Election Results at State level</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> state_data_rural():</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    state_data_rural1<span class="op">=</span>county_data.groupby(<span class="st">"State.Abbreviation"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    state_data_rural2<span class="op">=</span>state_data_rural1[<span class="st">"Percent.Rural"</span>].mean().to_frame(name<span class="op">=</span><span class="st">"Percent_Rural"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    state_data_rural2[<span class="st">"Election_Result_2016"</span>]<span class="op">=</span>[<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>]</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Finding 5 highest and 5 lowest Average Rural Area of Counties by State</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(state_data_rural2.nlargest(<span class="dv">5</span>,[<span class="st">"Percent_Rural"</span>],keep<span class="op">=</span><span class="st">"all"</span>))</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(state_data_rural2.nsmallest(<span class="dv">5</span>,[<span class="st">"Percent_Rural"</span>],keep<span class="op">=</span><span class="st">"all"</span>))</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Boxplot and swarmplot of Average Rural Area of Counties by State vs. 2016 Election Results</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    state_rural_boxplot<span class="op">=</span>sns.catplot(x<span class="op">=</span><span class="st">"Percent_Rural"</span>,y<span class="op">=</span><span class="st">"Election_Result_2016"</span>,data<span class="op">=</span>state_data_rural2,kind<span class="op">=</span><span class="st">"box"</span>,height<span class="op">=</span><span class="dv">4</span>,aspect<span class="op">=</span><span class="dv">2</span>,palette<span class="op">=</span><span class="st">'Set1'</span>)<span class="op">;</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    state_rural_boxplot.fig.suptitle(<span class="st">"Percentage of Rural Area for 2016 Election Results by State"</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    state_rural_swarmplot<span class="op">=</span>sns.swarmplot(x<span class="op">=</span><span class="st">"Percent_Rural"</span>,y<span class="op">=</span><span class="st">"Election_Result_2016"</span>,data<span class="op">=</span>state_data_rural2,size<span class="op">=</span><span class="dv">3</span>,color<span class="op">=</span><span class="st">".3"</span>,linewidth<span class="op">=</span><span class="dv">0</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="63">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(state_data_rural())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    Percent_Rural Election_Result_2016
+State.Abbreviation                                    
+ME                       0.741931             Democrat
+VT                       0.712692             Democrat
+KY                       0.705077           Republican
+MT                       0.676014           Republican
+SD                       0.662645           Republican
+                    Percent_Rural Election_Result_2016
+State.Abbreviation                                    
+DC                         0.0000             Democrat
+RI                         0.1151             Democrat
+NJ                         0.1276             Democrat
+MA                         0.1504             Democrat
+HI                         0.1657             Democrat
+None</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="FP_2016_Election_Counties_files/figure-html/cell-8-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="64">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating a simple regression model with Average Rural Area of Counties by State vs. 2016 Election Results</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> state_data_rural_reg():   </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    state_data_rural1<span class="op">=</span>county_data.groupby(<span class="st">"State.Abbreviation"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    state_data_rural2<span class="op">=</span>state_data_rural1[<span class="st">"Percent.Rural"</span>].mean().to_frame(name<span class="op">=</span><span class="st">"Percent_Rural"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    state_data_rural2[<span class="st">"Election_Result_2016"</span>]<span class="op">=</span>[<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Democrat"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>,<span class="st">"Republican"</span>]</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    pd.get_dummies(data<span class="op">=</span>state_data_rural2[<span class="st">"Election_Result_2016"</span>])</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    olsmod2<span class="op">=</span>smf.ols(formula<span class="op">=</span><span class="st">"Percent_Rural ~ Election_Result_2016"</span>,data<span class="op">=</span>state_data_rural2)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    olsres2<span class="op">=</span>olsmod2.fit()</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(olsres2.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="65">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(state_data_rural_reg())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:          Percent_Rural   R-squared:                       0.269
+Model:                            OLS   Adj. R-squared:                  0.254
+Method:                 Least Squares   F-statistic:                     18.00
+Date:                Wed, 05 Oct 2022   Prob (F-statistic):           9.77e-05
+Time:                        15:44:13   Log-Likelihood:                 24.647
+No. Observations:                  51   AIC:                            -45.29
+Df Residuals:                      49   BIC:                            -41.43
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+======================================================================================================
+                                         coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------------------------------
+Intercept                              0.3717      0.033     11.187      0.000       0.305       0.438
+Election_Result_2016[T.Republican]     0.1838      0.043      4.243      0.000       0.097       0.271
+==============================================================================
+Omnibus:                        0.336   Durbin-Watson:                   1.717
+Prob(Omnibus):                  0.846   Jarque-Bera (JB):                0.059
+Skew:                          -0.077   Prob(JB):                        0.971
+Kurtosis:                       3.064   Cond. No.                         2.88
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+None</code></pre>
+</div>
+</div>
+</section>
+<section id="analysis-of-rural-area-percentage-per-county-on-state-level" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-of-rural-area-percentage-per-county-on-state-level">Analysis of Rural Area Percentage per County on State Level</h2>
+<ul>
+<li>The 5 states with the highest percentage of rural area per county include Maine, Vermont, Kentucky, Montana, and South Dakota.</li>
+<li>The 5 states/territories with the lowest percentage of rural area per county include Washington D.C., Rhode Island, New Jersey, Massachusetts, and Hawaii.</li>
+<li>From looking at this subsection of states and their voting pattern in the 2016 election, it would appear that states who voted Democratic had lower rural area percentage per county, despite the two states with the highest average percentage of rural area per county being Democratic.</li>
+<li>When examining the boxplot and simple regression of the variables, it appears that this notion is supported, with the relationship being statistically significant and having a p-value &lt; 0.05.</li>
+</ul>
+</section>
+<section id="county-level-summarization" class="level2">
+<h2 class="anchored" data-anchor-id="county-level-summarization">County Level Summarization</h2>
+<ul>
+<li>From state level summarization, we have established two statistically significant relationships:
+<ol type="1">
+<li>Average Rural Percentage Per County and 2016 State Election Results</li>
+<li>Average Severe Housing Problem Percentage Per County and 2016 State Election Results</li>
+</ol></li>
+<li>By analyzing these same predictor variables at a county level, this will answer questions of a possible relationship on a county level with the outcome variable.</li>
+<li>This will also offer insight into whether the predictor variables have similar relationships at both the state and county levels.</li>
+<li>The first plot and analysis will be on the same Percentage of Severe Housing Problems per County data.</li>
+</ul>
+<div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="66">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot of Severe Housing Problem Percentages by State with hue of 2016 Election Results</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>housing_plot<span class="op">=</span>sns.relplot(x<span class="op">=</span><span class="st">"State.Abbreviation"</span>,y<span class="op">=</span><span class="st">"Severe.Housing.Problems"</span>,hue<span class="op">=</span><span class="st">"Results"</span>,palette<span class="op">=</span><span class="st">"Set1"</span>,data<span class="op">=</span>county_data,height<span class="op">=</span><span class="dv">6</span>,aspect<span class="op">=</span><span class="dv">3</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="FP_2016_Election_Counties_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="analysis-of-severe-housing-problem-percentage-per-county-on-county-level" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-of-severe-housing-problem-percentage-per-county-on-county-level">Analysis of Severe Housing Problem Percentage per County on County Level</h2>
+<ul>
+<li>From looking at the previous plot of Severe Housing Problem Percentages for counties in various states, it appears that Democratic counties tend to have higher levels of Severe Housing Problems.</li>
+<li>It should also be noted that states with major urban cities, like California and New York, have outliers with higher severe housing problems.</li>
+<li>The next plot and analysis will be done on the same Average Percentage of Rural Area per County data.</li>
+</ul>
+<div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="67">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>rural_plot<span class="op">=</span>sns.relplot(x<span class="op">=</span><span class="st">"State.Abbreviation"</span>,y<span class="op">=</span><span class="st">"Percent.Rural"</span>,hue<span class="op">=</span><span class="st">"Results"</span>,palette<span class="op">=</span><span class="st">"Set1"</span>,data<span class="op">=</span>county_data,height<span class="op">=</span><span class="dv">6</span>,aspect<span class="op">=</span><span class="dv">3</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="FP_2016_Election_Counties_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="analysis-of-rural-area-percentage-per-county-on-county-level" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-of-rural-area-percentage-per-county-on-county-level">Analysis of Rural Area Percentage per County on County Level</h2>
+<ul>
+<li>From looking at the previous plot of Rural Area Percentages for counties in various states, there does not appear to be a definitive pattern, although counties that voted Republican do seem to have higher rural area percentages.</li>
+<li>It should also be noted that almost all counties that were 100% rural voted Republican, and almost all counties that were 0% rural voted Democratic.</li>
+<li>By summarizing the data of both Rural Area Percentage and Severe Housing Problems through simple regressions, clearer relationships can be established.</li>
+<li>The next summaries will be of Severe Housing Problems and Rural Area Percentage, respectively.</li>
+</ul>
+<div class="cell" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="68">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Severe Housing Problems Simple Regression</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>county_data1<span class="op">=</span>county_data</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>county_data1[<span class="st">"Severe_Housing_Problems"</span>]<span class="op">=</span>county_data1[<span class="st">"Severe.Housing.Problems"</span>]</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>county_data1[<span class="st">"Election_Results"</span>]<span class="op">=</span>county_data1[<span class="st">"Election.Results.2016"</span>]</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>olsmod3<span class="op">=</span>smf.ols(formula<span class="op">=</span><span class="st">"Severe_Housing_Problems ~ Election_Results"</span>,data<span class="op">=</span>county_data1)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>olsres3<span class="op">=</span>olsmod3.fit()</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(olsres3.summary())</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Rural Area Percentage Simple Regression</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>county_data1[<span class="st">"Percent_Rural"</span>]<span class="op">=</span>county_data1[<span class="st">"Percent.Rural"</span>]</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>olsmod4<span class="op">=</span>smf.ols(formula<span class="op">=</span><span class="st">"Percent_Rural ~ Election_Results"</span>,data<span class="op">=</span>county_data1)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>olsres4<span class="op">=</span>olsmod4.fit()</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(olsres4.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                               OLS Regression Results                              
+===================================================================================
+Dep. Variable:     Severe_Housing_Problems   R-squared:                       0.254
+Model:                                 OLS   Adj. R-squared:                  0.254
+Method:                      Least Squares   F-statistic:                     922.7
+Date:                     Wed, 05 Oct 2022   Prob (F-statistic):          1.04e-174
+Time:                             15:49:11   Log-Likelihood:                 5219.8
+No. Observations:                     2715   AIC:                        -1.044e+04
+Df Residuals:                         2713   BIC:                        -1.042e+04
+Df Model:                                1                                         
+Covariance Type:                 nonrobust                                         
+==================================================================================================
+                                     coef    std err          t      P&gt;|t|      [0.025      0.975]
+--------------------------------------------------------------------------------------------------
+Intercept                          0.1902      0.002    113.500      0.000       0.187       0.194
+Election_Results[T.Republican]    -0.0557      0.002    -30.376      0.000      -0.059      -0.052
+==============================================================================
+Omnibus:                      281.811   Durbin-Watson:                   1.419
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              503.693
+Skew:                           0.702   Prob(JB):                    4.21e-110
+Kurtosis:                       4.575   Cond. No.                         4.74
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:          Percent_Rural   R-squared:                       0.133
+Model:                            OLS   Adj. R-squared:                  0.132
+Method:                 Least Squares   F-statistic:                     415.3
+Date:                Wed, 05 Oct 2022   Prob (F-statistic):           5.25e-86
+Time:                        15:49:11   Log-Likelihood:                -430.50
+No. Observations:                2715   AIC:                             865.0
+Df Residuals:                    2713   BIC:                             876.8
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==================================================================================================
+                                     coef    std err          t      P&gt;|t|      [0.025      0.975]
+--------------------------------------------------------------------------------------------------
+Intercept                          0.2931      0.013     21.822      0.000       0.267       0.319
+Election_Results[T.Republican]     0.2994      0.015     20.378      0.000       0.271       0.328
+==============================================================================
+Omnibus:                      249.772   Durbin-Watson:                   1.733
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               85.947
+Skew:                           0.161   Prob(JB):                     2.17e-19
+Kurtosis:                       2.190   Cond. No.                         4.74
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
+</div>
+</div>
+</section>
+<section id="analysis-of-summaries-on-county-level" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-of-summaries-on-county-level">Analysis of Summaries on County Level</h2>
+<ul>
+<li>The simple regression of Severe Housing Problems shows that it has a statistically significant effect on the 2016 Presidential Election Results by county, since p-value &lt; 0.05. 25.4% of the variation in Severe Housing Problem percentages were explainable by Election Results, establishing the association between the two.</li>
+<li>The simple regression of Rural Area Percentage also shows that it has a statistically significant effect on the 2016 Presidential Election Results by county, since p-value &lt; 0.05. 25.4% of the variation in Rural Area percentage were explainable by Election Results, establishing the association between the two.</li>
+<li>These summaries and previous graphs displays the similarities between relationships of x and y-variables on both the state and county level. Severe Housing Problems and Rural Area Percentage both had statistically significant associations with the Election Results for the Presidential Election on the state and county level and a measurable effect that one has on the other.</li>
+<li>We can further look at the relationship between these predictor variables, and others, to see interesting patterns that arise.</li>
+</ul>
+</section>
+<section id="predictor-variable-relationships" class="level2">
+<h2 class="anchored" data-anchor-id="predictor-variable-relationships">Predictor Variable Relationships</h2>
+<ul>
+<li>Examining the relationships between predictor variables like Severe Housing Problems and Rural Area Percentages can help better understand the underlying causes of why certain trends may exist.</li>
+<li>The first plot will be made comparing the Rural Area Percentage and Severe Housing Problems.
+<ul>
+<li>For this plot, the data of Rural Area Percentage has been discretized.</li>
+</ul></li>
+<li>The second plot shows the relationship between Severe Housing Problems and another predictor variable, Percentage of Uninsured Residents.
+<ul>
+<li>A hue has also been used on this plot to show the differences between counties based on 2016 Election Results.</li>
+</ul></li>
+</ul>
+<div class="cell" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="69">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Barchart of Categorized Percentage Rural Area vs Severe Housing Problems</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>seq_colors<span class="op">=</span>[<span class="st">'#67001f'</span>,<span class="st">'#b2182b'</span>,<span class="st">'#d6604d'</span>,<span class="st">'#f4a582'</span>,<span class="st">'#fddbc7'</span>,<span class="st">'#d1e5f0'</span>,<span class="st">'#92c5de'</span>,<span class="st">'#4393c3'</span>,<span class="st">'#2166ac'</span>,<span class="st">'#053061'</span>]</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>custom_palette<span class="op">=</span>sns.color_palette(seq_colors)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>county_data[<span class="st">"Catagories.Percent.Rural"</span>]<span class="op">=</span>pd.cut(county_data[<span class="st">"Percent.Rural"</span>],[<span class="dv">0</span>,<span class="fl">0.1</span>,<span class="fl">0.2</span>,<span class="fl">0.3</span>,<span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span>,<span class="fl">0.7</span>,<span class="fl">0.8</span>,<span class="fl">0.9</span>,<span class="dv">1</span>])</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>g<span class="op">=</span>sns.catplot(x<span class="op">=</span><span class="st">'Catagories.Percent.Rural'</span>,y<span class="op">=</span><span class="st">'Severe.Housing.Problems'</span>,kind<span class="op">=</span><span class="st">'bar'</span>,palette<span class="op">=</span>custom_palette,data<span class="op">=</span>county_data,height<span class="op">=</span><span class="dv">4</span>,aspect<span class="op">=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="FP_2016_Election_Counties_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-scrolled="true" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="70">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot of Uninsured vs Severe Housing Problems with hue of Election Results</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>uninsured_plot<span class="op">=</span>sns.lmplot(x<span class="op">=</span><span class="st">"Uninsured"</span>,y<span class="op">=</span><span class="st">"Severe.Housing.Problems"</span>,hue<span class="op">=</span><span class="st">"Results"</span>,data<span class="op">=</span>county_data,markers<span class="op">=</span>[<span class="st">"o"</span>,<span class="st">"x"</span>],palette<span class="op">=</span><span class="st">"Set1"</span>,scatter_kws<span class="op">=</span>{<span class="st">"alpha"</span>:<span class="fl">0.15</span>},line_kws<span class="op">=</span>{<span class="st">"alpha"</span>:<span class="dv">1</span>},height<span class="op">=</span><span class="dv">6</span>,aspect<span class="op">=</span><span class="dv">2</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="FP_2016_Election_Counties_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="analysis-of-graphical-summaries" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-of-graphical-summaries">Analysis of Graphical Summaries</h2>
+<ul>
+<li>The first plot appears to show a relationship between the Categorized Rural Area Percentage and Severe Housing Problems within the counties.
+<ul>
+<li>The lower the percentage of rural area in the county, the greater the severe housing problems.</li>
+<li>This appears to be logical given that the counties that voted Democratic had lower rural area percentages and higher severe housing problems.</li>
+</ul></li>
+<li>The second plot appears to show a relationship between the Percentage of Uninsured and Severe Housing Problems within the counties.
+<ul>
+<li>The higher the percentage of uninsured, the greater the severe housing problems.</li>
+<li>This signifies that many patterns exist when comparing similar environmental characteristics.</li>
+<li>The plot also reaffirms the relationship between higher severe housing problems and counties that voted Democratic.</li>
+</ul></li>
+</ul>
+</section>
+<section id="regression-tree" class="level2">
+<h2 class="anchored" data-anchor-id="regression-tree">Regression Tree</h2>
+<ul>
+<li>Now that relationships between predictor variables and the outcome variable have been established on both the state and county level, a regression tree can be created to determine the importance of predictor variables.
+<ul>
+<li>The regression tree can show how the predictor variables can be used to predict whether a county voted Republican or Democratic.</li>
+</ul></li>
+</ul>
+<div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> warnings <span class="im">import</span> simplefilter</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>simplefilter(action<span class="op">=</span><span class="st">'ignore'</span>, category<span class="op">=</span><span class="pp">FutureWarning</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> reg_tree():</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Getting categorical and continuous variables:</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    Xcts<span class="op">=</span>county_data[[<span class="st">"Uninsured"</span>,<span class="st">"Primary.Care.Physicians.Per.1000"</span>,<span class="st">"Mental.health.providers.Per.1000"</span>,<span class="st">"Adult.Obesity"</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"Proportion.of.Smokers"</span>,<span class="st">"High.School.Graduation"</span>,<span class="st">"Insufficient.Sleep"</span>,<span class="st">"Physical.Inactivity"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"Excessive.Drinking"</span>,<span class="st">"Median.Household.Income"</span>,<span class="st">"Severe.Housing.Problems"</span>,<span class="st">"Unemployment"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"Percent.Rural"</span>,<span class="st">"Over.65"</span>,<span class="st">"Percent.Females"</span>,<span class="st">"Life.Expectancy"</span>,<span class="st">"Population"</span>]]</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    Xcat<span class="op">=</span>pd.get_dummies(county_data[[<span class="st">"Food.Insecurity.Quintile"</span>,<span class="st">"Income.Inequality.Quartile"</span>,<span class="st">"State.Abbreviation"</span>]],drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Merge continuous and categorical variables into single dataset.</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    X<span class="op">=</span>pd.merge(Xcts,Xcat,left_index<span class="op">=</span><span class="va">True</span>,right_index<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>pd.get_dummies(county_data[<span class="st">"Election.Results.2016"</span>])</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Splitting into test and train</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    X_train,X_test,y_train,y_test<span class="op">=</span>train_test_split(X,y,test_size<span class="op">=</span><span class="fl">0.5</span>,random_state<span class="op">=</span><span class="dv">42</span>)    <span class="co">#A 50/50 split.</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    dtr<span class="op">=</span>tree.DecisionTreeRegressor(random_state<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    path<span class="op">=</span>dtr.cost_complexity_pruning_path(X_train,y_train)</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    ccp_alphas,impurities<span class="op">=</span>path.ccp_alphas,path.impurities</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    rgrs<span class="op">=</span>[]</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ccp_alpha <span class="kw">in</span> ccp_alphas:</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>        dtr<span class="op">=</span>tree.DecisionTreeRegressor(random_state<span class="op">=</span><span class="dv">0</span>,ccp_alpha<span class="op">=</span>ccp_alpha)</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>        dtr.fit(X_train,y_train)</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>        rgrs.append(dtr)</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>    rgrs<span class="op">=</span>rgrs[:<span class="op">-</span><span class="dv">1</span>] <span class="co">#Remove simplest tree with no branches.</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>    ccp_alphas<span class="op">=</span>ccp_alphas[:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>    node_counts<span class="op">=</span>[dtr.tree_.node_count <span class="cf">for</span> dtr <span class="kw">in</span> rgrs]</span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>    depth<span class="op">=</span>[dtr.tree_.max_depth <span class="cf">for</span> dtr <span class="kw">in</span> rgrs]</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>    train_scores<span class="op">=</span>[dtr.score(X_train,y_train) <span class="cf">for</span> dtr <span class="kw">in</span> rgrs]</span>
+<span id="cb20-35"><a href="#cb20-35" aria-hidden="true" tabindex="-1"></a>    test_scores<span class="op">=</span>[dtr.score(X_test,y_test) <span class="cf">for</span> dtr <span class="kw">in</span> rgrs]</span>
+<span id="cb20-36"><a href="#cb20-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-37"><a href="#cb20-37" aria-hidden="true" tabindex="-1"></a>    best<span class="op">=</span>pd.Series(test_scores).idxmax()</span>
+<span id="cb20-38"><a href="#cb20-38" aria-hidden="true" tabindex="-1"></a>    ccp_alphas[best]</span>
+<span id="cb20-39"><a href="#cb20-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-40"><a href="#cb20-40" aria-hidden="true" tabindex="-1"></a>    best_tree<span class="op">=</span>rgrs[best]</span>
+<span id="cb20-41"><a href="#cb20-41" aria-hidden="true" tabindex="-1"></a>    fig<span class="op">=</span>plt.figure(num<span class="op">=</span><span class="va">None</span>,figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">6</span>),dpi<span class="op">=</span><span class="dv">80</span>,facecolor<span class="op">=</span><span class="st">"w"</span>,edgecolor<span class="op">=</span><span class="st">"k"</span>)</span>
+<span id="cb20-42"><a href="#cb20-42" aria-hidden="true" tabindex="-1"></a>    tree.plot_tree(best_tree,filled<span class="op">=</span><span class="va">True</span>,feature_names<span class="op">=</span>X.columns)<span class="op">;</span></span>
+<span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-44"><a href="#cb20-44" aria-hidden="true" tabindex="-1"></a>    importances<span class="op">=</span>pd.DataFrame({<span class="st">"feature"</span>:X_train.columns,<span class="st">"importance"</span>:np.<span class="bu">round</span>(best_tree.feature_importances_,<span class="dv">3</span>)})</span>
+<span id="cb20-45"><a href="#cb20-45" aria-hidden="true" tabindex="-1"></a>    importances<span class="op">=</span>importances.sort_values(<span class="st">"importance"</span>,ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb20-46"><a href="#cb20-46" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(importances[:<span class="dv">5</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-slideshow="{&quot;slide_type&quot;:&quot;subslide&quot;}" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(reg_tree())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                             feature  importance
+12                     Percent.Rural       0.568
+10           Severe.Housing.Problems       0.280
+7                Physical.Inactivity       0.084
+2   Mental.health.providers.Per.1000       0.068
+54             State.Abbreviation_NJ       0.000
+None</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="FP_2016_Election_Counties_files/figure-html/cell-17-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="analysis-of-regression-tree" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-of-regression-tree">Analysis of Regression Tree</h2>
+<ul>
+<li>The list of importances displays that the most important predictors variables are Rural Area Percentage and Severe Housing Problems for the 2016 Election Results by county.
+<ul>
+<li>Physical Inactivity and Mental Health Providers per 1000 were also slightly important, although much less than the prior two.</li>
+</ul></li>
+<li>The regression tree also supports this, with the root node being the predictor variable Rural Area Percentage.
+<ul>
+<li>The only other node that isn’t a terminal node is the Severe Housing Problems, showing it is next in importance for the tree.</li>
+</ul></li>
+<li>Key terms in the tree also support this notion:
+<ul>
+<li>The term that has a Percent.Rural &lt;= 0.098 and Mental.health.providers.Per.1000 &gt;= 2.442 has roughly 96.4% of the 56 counties as Democratic. This would appear logical given that these may be counties with major cities that have lots of mental health providers, supporting the idea that more urban counties tend to vote Democratic.</li>
+<li>Also, the term that has a Percent.Rural &gt;= 0.098, Severe.Housing.Problems &lt;= 0.183, and Physical.Inactivity &gt;= 0.166 has roughly 94.4% of the 1104 counties as Republican. This supports the idea that more rural counties with less severe housing problems tend to vote Republican.</li>
+</ul></li>
+</ul>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<ul>
+<li>The summarization of data has revealed relationships and patterns between predictor variables and the outcome variable.
+<ul>
+<li>Counties that had higher percentages of rural area and/or lower levels of severe housing problems tended to vote Republican in the 2016 Presidential Election.</li>
+</ul></li>
+<li>In addition, many predictor variables that had statistically significant relationships with the outcome variable had relationships to one another.
+<ul>
+<li>When comparing percentage of rural area and severe housing problems, the more rural an area was, the less severe housing problems existed.</li>
+<li>Also, comparing percentage of uninsured and severe housing problems revealed that relationships also exist between characteristics that share similar underlying causes.</li>
+</ul></li>
+<li>Finally, the predictor variables of highest importance in predicting how a county voted was the percentage of rural area and level of severe housing problems, with physical inactivity and mental health providers per 1000 also having a small degree of importance.</li>
+<li>While there exists relationships in this data between predictor variables and the county level election results, it still appears that predicting how a county voted in the election solely based on predictor variables with a high accuracy is difficult.</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
